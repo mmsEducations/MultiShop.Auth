@@ -1,3 +1,8 @@
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using MultiShop.Auth.Api.Data;
+using MultiShop.Auth.Api.Data.Entites;
+
 var builder = WebApplication.CreateBuilder(args);
 
 
@@ -7,6 +12,21 @@ builder.Services.AddControllers();//Asp.Net Core MVC altyapýsýný uygulamamýza da
 //Swagger 1
 builder.Services.AddEndpointsApiExplorer(); //Swaggerin apiyi incelemesi ve belgelerin oluþturulmasý 
 builder.Services.AddSwaggerGen();//Swagger belgeleri için gerekli tüm ayarlarýn yapýlandýrýlmasý
+
+//Database Configuration
+
+builder.Services.AddDbContext<MultiShopAuthDbContext>(options =>
+{
+    //options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")); //mSsql db 
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
+});
+
+//Microsft ýdentity configuration
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+       .AddEntityFrameworkStores<MultiShopAuthDbContext>()
+       .AddDefaultTokenProviders();
+
+
 
 
 var app = builder.Build();

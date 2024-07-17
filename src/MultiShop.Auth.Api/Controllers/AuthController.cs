@@ -24,6 +24,22 @@ namespace MultiShop.Auth.Api.Controllers
 
             return Ok(response);
         }
+
+
+        [HttpGet]
+        [Route("sign-in")]
+        public ActionResult<Response<List<string>>> SignIn()
+        {
+            List<string> datas = new List<string>
+            {
+                "Bektaş baykara","Sihamettin adıgüzel","Ömer kendigüzel","Nurullah şeytanıbol"
+            };
+
+            var response = new Response<List<string>>(true, "Listeleme Başarılı", datas, 200);
+
+
+            return Ok(response);
+        }
     }
 }
 
